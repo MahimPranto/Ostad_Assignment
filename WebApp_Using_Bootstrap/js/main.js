@@ -14,3 +14,38 @@ mode.addEventListener("click", () => {
   }
 });
 
+function handleSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const inputs = form.querySelectorAll('input, select');
+
+  let isValid = true;
+  inputs.forEach(input => {
+    if (!input.value) {
+      isValid = false;
+      input.classList.add('is-invalid');
+    } else {
+      input.classList.remove('is-invalid');
+    }
+  });
+
+  if (isValid) {
+    showAlert('success', 'Form submitted successfully!');
+    form.reset();
+  } else {
+    showAlert('danger', 'Please fill in all the required fields.');
+  }
+}
+
+function showAlert(type, message) {
+  const alertElement = document.createElement('div');
+  alertElement.className = `alert alert-${type} mt-3`;
+  alertElement.textContent = message;
+
+  const container = document.querySelector('.container');
+  container.appendChild(alertElement);
+
+  setTimeout(function () {
+    alertElement.remove();
+  }, 3000);
+}
